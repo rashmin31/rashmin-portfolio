@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Custom Properties ──────────────────────────────────────────────── */
+:root {
+  --color-background: #050505;
+  --color-surface: #0a0a0a;
+  --color-accent: #6366f1;
+  --color-accent-warm: #f59e0b;
+  --color-muted: #374151;
+  --color-text-primary: #f9fafb;
+  --color-text-secondary: #9ca3af;
+}
+
+/* ─── Base Reset ─────────────────────────────────────────────────────────── */
+html,
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* ─── Custom Cursor — hide default on precise-pointer devices ────────────── */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+/* ─── Custom Cursor — hide when modal is open (iframe captures mouse events) */
+body[data-modal] .cursor-dot,
+body[data-modal] .cursor-ring {
+  visibility: hidden;
+}
+
+/* ─── Custom Scrollbar ───────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-muted);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-muted) var(--color-background);
+}
+
+/* ─── Selection ──────────────────────────────────────────────────────────── */
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-text-primary);
+}
+
+::-moz-selection {
+  background-color: var(--color-accent);
+  color: var(--color-text-primary);
+}
