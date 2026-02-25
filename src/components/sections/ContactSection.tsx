@@ -27,7 +27,7 @@ export function ContactSection() {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 75%',
-            once: true,
+            toggleActions: 'play none none reverse',
           },
         }
       )
@@ -45,7 +45,7 @@ export function ContactSection() {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 70%',
-            once: true,
+            toggleActions: 'play none none reverse',
           },
           delay: 0.15,
         }

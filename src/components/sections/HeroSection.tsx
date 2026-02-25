@@ -17,7 +17,14 @@ export function HeroSection() {
       // Split name into individual characters for the assembly animation
       split = new SplitText(nameRef.current!, { type: 'chars' })
 
-      const tl = gsap.timeline({ delay: 0.3 })
+      const tl = gsap.timeline({
+        delay: 0.3,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top bottom',
+          toggleActions: 'play none restart none',
+        },
+      })
 
       // 1. Each character flips up from below — fragmented → assembled
       tl.from(split.chars, {

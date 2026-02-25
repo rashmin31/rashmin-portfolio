@@ -39,6 +39,7 @@ export function AboutSection() {
                 scrollTrigger: {
                     trigger: sectionRef.current,
                     start: "top 80%",
+                    toggleActions: "play none none reverse",
                 },
             });
 
@@ -53,6 +54,7 @@ export function AboutSection() {
                 scrollTrigger: {
                     trigger: sectionRef.current,
                     start: "top 80%",
+                    toggleActions: "play none none reverse",
                 },
             });
         }, sectionRef);

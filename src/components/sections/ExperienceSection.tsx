@@ -23,6 +23,7 @@ export function ExperienceSection() {
           scrollTrigger: {
             trigger: entry,
             start: 'top 75%',
+            toggleActions: 'play none none reverse',
           },
         })
       })

@@ -26,7 +26,7 @@ export function SkillsSection() {
           scrollTrigger: {
             trigger: group,
             start: 'top 88%',
-            once: true,
+            toggleActions: 'play none none reverse',
             invalidateOnRefresh: true,
           },
         })
