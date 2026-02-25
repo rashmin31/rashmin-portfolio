@@ -10,10 +10,13 @@ export function SkillsSection() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Each skill group slides up with stagger between groups
+      // Skip animations on mobile — chips follow parent group, no double-invisible risk
+      const isMobile = window.innerWidth < 768
+      if (isMobile) return
+
       const groups = gsap.utils.toArray<HTMLElement>('.skill-group')
 
       groups.forEach((group, i) => {
-        // Group heading + chip row fade up together, offset by group index
         gsap.from(group, {
           y: 40,
           opacity: 0,
@@ -24,22 +27,7 @@ export function SkillsSection() {
             trigger: group,
             start: 'top 88%',
             once: true,
-          },
-        })
-
-        // Individual chips within this group stagger
-        const chips = group.querySelectorAll('.skill-chip')
-        gsap.from(chips, {
-          y: 20,
-          opacity: 0,
-          duration: 0.4,
-          stagger: 0.04,
-          ease: 'power3.out',
-          delay: i * 0.1 + 0.15,
-          scrollTrigger: {
-            trigger: group,
-            start: 'top 88%',
-            once: true,
+            invalidateOnRefresh: true,
           },
         })
       })
@@ -52,12 +40,12 @@ export function SkillsSection() {
     <section
       ref={sectionRef}
       id="skills"
-      className="min-h-screen flex items-center py-24"
+      className="min-h-screen flex items-center py-16 md:py-24"
     >
       <div className="max-w-6xl mx-auto px-6 w-full">
 
         {/* ── Header ── */}
-        <div className="mb-16">
+        <div className="mb-10 md:mb-16">
           <p className="font-mono text-sm text-accent tracking-widest uppercase mb-4">
             Skills &amp; Expertise
           </p>
@@ -67,7 +55,7 @@ export function SkillsSection() {
         </div>
 
         {/* ── Skill groups ── */}
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col gap-8 md:gap-12">
           {SKILLS.map((group) => (
             <div key={group.category} className="skill-group">
 

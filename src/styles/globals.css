@@ -30,6 +30,14 @@ body {
   }
 }
 
+/* ─── Custom Cursor — hide cursor elements on touch/mobile devices ────────── */
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
 /* ─── Custom Cursor — hide when modal is open (iframe captures mouse events) */
 body[data-modal] .cursor-dot,
 body[data-modal] .cursor-ring {
