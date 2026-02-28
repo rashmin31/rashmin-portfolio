@@ -5,6 +5,7 @@ import {
   CHART_CANDLE_STEP,
   CHART_TOTAL_CANDLES,
 } from '@/lib/constants'
+import { lenisStore } from '@/lib/lenis-store'
 
 export function CameraRig() {
   const { camera } = useThree()
@@ -32,8 +33,14 @@ export function CameraRig() {
     target.current.y += (mouse.current.y * 0.15 - target.current.y) * 0.05
 
     // ── Scroll-driven horizontal pan ──────────────────────────────────
-    const scrollable = document.documentElement.scrollHeight - window.innerHeight
-    const progress = scrollable > 0 ? window.scrollY / scrollable : 0
+    // Read from Lenis (authoritative) — falls back to native scrollY
+    const lenis = lenisStore.get()
+    const progress = (lenis && lenis.limit > 0)
+      ? lenis.progress
+      : (() => {
+          const scrollable = document.documentElement.scrollHeight - window.innerHeight
+          return scrollable > 0 ? window.scrollY / scrollable : 0
+        })()
 
     // Index of the currently forming candle (float)
     const formingIdx = Math.min(

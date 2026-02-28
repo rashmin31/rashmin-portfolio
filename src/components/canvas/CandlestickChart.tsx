@@ -15,6 +15,7 @@ import {
   CHART_VOL_Y_BASE,
   CHART_VOL_Y_MAX,
 } from '@/lib/constants'
+import { lenisStore } from '@/lib/lenis-store'
 
 // ─── Types ────────────────────────────────────────────────────────────────
 type TCandleData = {
@@ -192,10 +193,18 @@ export function CandlestickChart() {
   // ── useFrame: scroll-driven animation ────────────────────────────────
   useFrame(() => {
     if (typeof window === 'undefined') return
-    const scrollable = document.documentElement.scrollHeight - window.innerHeight
-    if (scrollable <= 0) return
 
-    const progress = window.scrollY / scrollable
+    // Read scroll progress from Lenis (authoritative source when Lenis is active)
+    // Falls back to native window.scrollY if Lenis hasn't initialised yet
+    const lenis = lenisStore.get()
+    let progress: number
+    if (lenis && lenis.limit > 0) {
+      progress = lenis.progress
+    } else {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight
+      if (scrollable <= 0) return
+      progress = window.scrollY / scrollable
+    }
     const rawCount = progress * (CHART_TOTAL_CANDLES + 2)
     const visibleCount = Math.min(Math.floor(rawCount), CHART_TOTAL_CANDLES)
     const fraction = easeOutCubic(rawCount - Math.floor(rawCount))
