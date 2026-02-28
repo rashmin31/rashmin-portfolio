@@ -1,13 +1,20 @@
 import { useEffect, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
+import {
+  CHART_ORIGIN_X,
+  CHART_CANDLE_STEP,
+  CHART_TOTAL_CANDLES,
+} from '@/lib/constants'
 
 export function CameraRig() {
   const { camera } = useThree()
 
   // Raw normalised mouse position (-1 to +1)
   const mouse = useRef({ x: 0, y: 0 })
-  // Smoothed position that lags behind mouse
+  // Smoothed mouse offset that lags behind mouse
   const target = useRef({ x: 0, y: 0 })
+  // Smoothed scroll-driven horizontal pan
+  const scrollPan = useRef({ x: CHART_ORIGIN_X + 2 })
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -20,13 +27,31 @@ export function CameraRig() {
   }, [])
 
   useFrame(() => {
-    // Lerp smoothly toward mouse position
+    // ── Mouse parallax (unchanged from original) ──────────────────────
     target.current.x += (mouse.current.x * 0.3 - target.current.x) * 0.05
     target.current.y += (mouse.current.y * 0.15 - target.current.y) * 0.05
 
-    // Apply to camera — z is reserved for ScrollTrigger
-    camera.position.x = target.current.x
+    // ── Scroll-driven horizontal pan ──────────────────────────────────
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight
+    const progress = scrollable > 0 ? window.scrollY / scrollable : 0
+
+    // Index of the currently forming candle (float)
+    const formingIdx = Math.min(
+      progress * (CHART_TOTAL_CANDLES + 2),
+      CHART_TOTAL_CANDLES - 1
+    )
+    // World X of that candle
+    const formingX = CHART_ORIGIN_X + formingIdx * CHART_CANDLE_STEP
+    // Keep forming candle slightly right of center in view
+    const desiredPanX = formingX - 1.5
+
+    // Lerp smoothly to the desired pan position
+    scrollPan.current.x += (desiredPanX - scrollPan.current.x) * 0.04
+
+    // ── Combine pan + mouse offset ────────────────────────────────────
+    camera.position.x = scrollPan.current.x + target.current.x
     camera.position.y = target.current.y
+    // camera.position.z is set by the Canvas camera prop — do not touch
   })
 
   return null

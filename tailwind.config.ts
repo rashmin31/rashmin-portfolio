@@ -9,13 +9,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: '#050505',
-        surface: '#0a0a0a',
-        accent: '#6366f1',
-        'accent-warm': '#f59e0b',
-        muted: '#374151',
-        'text-primary': '#f9fafb',
-        'text-secondary': '#9ca3af',
+        background: '#131722',
+        surface: '#1e2033',
+        accent: '#2962ff',
+        'accent-warm': '#26a69a',
+        muted: '#363c4e',
+        'text-primary': '#d1d4dc',
+        'text-secondary': '#787b86',
+        'bull-green': '#26a69a',
+        'bear-red': '#ef5350',
+        'chart-grid': '#363c4e',
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'sans-serif'],

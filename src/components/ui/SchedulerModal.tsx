@@ -20,7 +20,7 @@ export function SchedulerModal({ isOpen, onClose }: Props) {
       cal('ui', {
         theme: 'dark',
         styles: {
-          branding: { brandColor: '#6366f1' },
+          branding: { brandColor: '#2962ff' },
         },
         hideEventTypeDetails: false,
       })

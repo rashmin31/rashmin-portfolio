@@ -4,13 +4,13 @@
 
 /* ─── CSS Custom Properties ──────────────────────────────────────────────── */
 :root {
-  --color-background: #050505;
-  --color-surface: #0a0a0a;
-  --color-accent: #6366f1;
-  --color-accent-warm: #f59e0b;
-  --color-muted: #374151;
-  --color-text-primary: #f9fafb;
-  --color-text-secondary: #9ca3af;
+  --color-background: #131722;
+  --color-surface: #1e2033;
+  --color-accent: #2962ff;
+  --color-accent-warm: #26a69a;
+  --color-muted: #363c4e;
+  --color-text-primary: #d1d4dc;
+  --color-text-secondary: #787b86;
 }
 
 /* ─── Base Reset ─────────────────────────────────────────────────────────── */

@@ -18,14 +18,14 @@ export function NavigationDots() {
       if (id === activeSection) {
         gsap.to(dot, {
           scale: 1.5,
-          backgroundColor: '#6366f1',
+          backgroundColor: '#2962ff',
           duration: 0.3,
           ease: 'power2.out',
         })
       } else {
         gsap.to(dot, {
           scale: 1,
-          backgroundColor: '#374151',
+          backgroundColor: '#363c4e',
           duration: 0.3,
           ease: 'power2.out',
         })

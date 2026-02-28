@@ -2,8 +2,8 @@ import { useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-const PARTICLE_COUNT = 3000
-const SPREAD = 15
+const PARTICLE_COUNT = 2000
+const SPREAD = 20
 
 export function ParticleField() {
   const pointsRef = useRef<THREE.Points>(null)
@@ -33,9 +33,9 @@ export function ParticleField() {
         />
       </bufferGeometry>
       <pointsMaterial
-        color="#6366f1"
-        size={0.02}
-        opacity={0.6}
+        color="#2a3050"
+        size={0.015}
+        opacity={0.4}
         transparent
         sizeAttenuation
       />
