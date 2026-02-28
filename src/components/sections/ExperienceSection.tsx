@@ -5,6 +5,17 @@ import { gsap } from '@/lib/gsap'
 import { EXPERIENCE } from '@/data/experience'
 import type { TExperience } from '@/types'
 
+function toTicker(company: string): string {
+  const map: Record<string, string> = {
+    'Punon Technologies': 'PUNON:TECH',
+    'Independent': 'SELF:DEV',
+    'Cityfalcon': 'CITY:FIN',
+    'Xebia': 'XEBIA:CONS',
+    'KPIT Technologies': 'KPIT:ENG',
+  }
+  return map[company] ?? company.toUpperCase().slice(0, 8)
+}
+
 export function ExperienceSection() {
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -13,7 +24,6 @@ export function ExperienceSection() {
       const entries = gsap.utils.toArray<HTMLElement>('.exp-entry')
 
       entries.forEach((entry, i) => {
-        // Odd entries are on the right (slide from right), even from left
         const fromLeft = i % 2 === 0
         gsap.from(entry, {
           x: fromLeft ? -60 : 60,
@@ -42,8 +52,8 @@ export function ExperienceSection() {
 
         {/* ── Header ── */}
         <div className="mb-20 text-center">
-          <p className="font-mono text-sm text-accent tracking-widest uppercase mb-4">
-            Experience
+          <p className="font-mono text-xs text-accent tracking-widest uppercase mb-4">
+            TRADE HISTORY
           </p>
           <h2 className="font-display text-4xl text-text-primary">
             The journey so far.
@@ -52,7 +62,7 @@ export function ExperienceSection() {
 
         {/* ── Timeline ── */}
         <div className="relative">
-          {/* Vertical centre line — hidden on mobile, visible md+ */}
+          {/* Vertical centre line */}
           <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-muted/40 -translate-x-1/2" />
 
           <div className="flex flex-col gap-16">
@@ -77,6 +87,7 @@ function TimelineEntry({
   index: number
 }) {
   const isLeft = index % 2 === 0
+  const isOpen = entry.endDate === 'Present'
 
   return (
     <div
@@ -84,64 +95,93 @@ function TimelineEntry({
         isLeft ? 'md:flex-row' : 'md:flex-row-reverse'
       }`}
     >
-      {/* Card — takes up ~45% width on desktop, full on mobile */}
-      <div className="w-full md:w-[45%] bg-surface border border-muted rounded-xl p-6 flex flex-col gap-4">
-
-        {/* Role + company */}
-        <div>
-          <h3 className="font-display text-xl text-text-primary">
-            {entry.role}
-          </h3>
-          <p className="font-mono text-accent mt-1">{entry.company}</p>
+      {/* Card */}
+      <div
+        className={`w-full md:w-[45%] bg-surface/80 backdrop-blur-sm border border-muted rounded-xl p-6 flex flex-col gap-4 ${
+          isOpen ? 'border-l-2 border-l-[#26a69a]' : 'border-l-2 border-l-muted'
+        }`}
+      >
+        {/* Header row: ticker + status badge */}
+        <div className="flex items-start justify-between gap-2">
+          <div>
+            <p className="font-mono text-xs text-accent tracking-widest mb-1">
+              {toTicker(entry.company)}
+            </p>
+            <h3 className="font-display text-xl text-text-primary">
+              <span className="font-mono text-xs text-muted mr-1">POSITION:</span>
+              {entry.role}
+            </h3>
+          </div>
+          <span
+            className={`font-mono text-xs tracking-widest flex-shrink-0 mt-1 ${
+              isOpen ? 'text-[#26a69a]' : 'text-muted'
+            }`}
+          >
+            {isOpen ? '● OPEN' : '■ CLOSED'}
+          </span>
         </div>
 
         {/* Meta: dates + location */}
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="font-mono text-sm text-text-secondary">
-            {entry.startDate} — {entry.endDate}
+        <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-text-secondary">
+          <span>
+            <span className="text-muted">ENTRY:</span> {entry.startDate}
           </span>
-          <span className="text-muted/60">·</span>
-          <span className="font-mono text-xs text-muted">{entry.location}</span>
+          <span className="text-muted/40">·</span>
+          <span>
+            <span className="text-muted">EXIT:</span>{' '}
+            <span className={isOpen ? 'text-[#26a69a]' : ''}>{entry.endDate}</span>
+          </span>
+          <span className="text-muted/40">·</span>
+          <span className="text-muted">{entry.location}</span>
         </div>
 
         {/* Description */}
-        <p className="text-text-secondary text-sm leading-relaxed">
-          {entry.description}
-        </p>
+        <div className="flex flex-col gap-1">
+          <span className="font-mono text-xs text-muted tracking-widest">{'// TRADE RATIONALE'}</span>
+          <p className="text-text-secondary text-sm leading-relaxed">
+            {entry.description}
+          </p>
+        </div>
 
         {/* Achievements */}
         {entry.achievements.length > 0 && (
-          <ul className="flex flex-col gap-2">
-            {entry.achievements.map((achievement, j) => (
-              <li key={j} className="flex items-start gap-2 text-sm text-text-secondary">
-                <span className="mt-[6px] w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
-                {achievement}
-              </li>
-            ))}
-          </ul>
+          <div className="flex flex-col gap-2">
+            <span className="font-mono text-xs text-muted tracking-widest">{'// P&L HIGHLIGHTS'}</span>
+            <ul className="flex flex-col gap-2">
+              {entry.achievements.map((achievement, j) => (
+                <li key={j} className="flex items-start gap-2 text-sm text-text-secondary">
+                  <span className="mt-[2px] text-[#26a69a] flex-shrink-0 font-mono text-xs">▲</span>
+                  {achievement}
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
 
         {/* Tech stack chips */}
         {entry.techStack.length > 0 && (
-          <div className="flex flex-wrap gap-2 pt-2 border-t border-muted/40">
-            {entry.techStack.map((tech) => (
-              <span
-                key={tech}
-                className="px-3 py-1 border border-muted rounded-full font-mono text-xs text-text-secondary"
-              >
-                {tech}
-              </span>
-            ))}
+          <div className="flex flex-col gap-2 pt-2 border-t border-muted/40">
+            <span className="font-mono text-xs text-muted tracking-widest">INSTRUMENTS:</span>
+            <div className="flex flex-wrap gap-2">
+              {entry.techStack.map((tech) => (
+                <span
+                  key={tech}
+                  className="px-3 py-1 border border-[#26a69a]/30 rounded-full font-mono text-xs text-text-secondary"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
           </div>
         )}
       </div>
 
-      {/* Centre dot on the timeline line — desktop only */}
+      {/* Centre marker on the timeline line — desktop only */}
       <div className="hidden md:flex w-[10%] justify-center items-start pt-6 flex-shrink-0">
-        <div className="w-3 h-3 rounded-full bg-accent ring-4 ring-background" />
+        <div className="w-3 h-3 bg-accent ring-4 ring-background" style={{ clipPath: 'none' }} />
       </div>
 
-      {/* Spacer — pushes card to correct side */}
+      {/* Spacer */}
       <div className="hidden md:block md:w-[45%]" />
     </div>
   )

@@ -41,11 +41,11 @@ export function ProjectsSection() {
 
           {/* ── Header ── */}
           <div className="mb-16">
-            <p className="font-mono text-sm text-accent tracking-widest uppercase mb-4">
-              Projects
+            <p className="font-mono text-xs text-accent tracking-widest uppercase mb-4">
+              ACTIVE POSITIONS / PORTFOLIO
             </p>
             <h2 className="font-display text-4xl text-text-primary">
-              Things I&apos;ve built.
+              Deployed Projects
             </h2>
           </div>
 
@@ -81,22 +81,23 @@ function ProjectCard({
   project: TProject
   onOpen: () => void
 }) {
+  const isLive = !!project.liveUrl
+
   return (
     <article
-      className={`project-card group relative bg-surface border border-muted rounded-xl overflow-hidden flex flex-col cursor-pointer transition-colors duration-300 hover:border-accent/50 ${
+      className={`project-card group relative bg-surface/80 backdrop-blur-sm border border-muted border-l-2 border-l-[#26a69a] rounded-xl overflow-hidden flex flex-col cursor-pointer transition-colors duration-300 hover:border-[#26a69a]/50 ${
         project.featured ? 'md:col-span-2 lg:col-span-2' : ''
       }`}
       onClick={onOpen}
     >
       {/* Project image */}
       <div className="relative aspect-video bg-muted overflow-hidden">
-        {/* Fallback gradient shown when no image exists */}
         <div className="absolute inset-0 bg-gradient-to-br from-surface to-muted/60" />
 
-        {/* "View Project" overlay — appears on hover */}
+        {/* Hover overlay */}
         <div className="absolute inset-0 flex items-center justify-center bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-          <span className="font-mono text-sm text-accent border border-accent rounded-full px-5 py-2">
-            View Project
+          <span className="font-mono text-sm text-[#26a69a] border border-[#26a69a] rounded px-5 py-2 tracking-wider">
+            INSPECT →
           </span>
         </div>
       </div>
@@ -104,34 +105,51 @@ function ProjectCard({
       {/* Card body */}
       <div className="flex flex-col gap-3 p-6 flex-1">
 
-        {/* Role badge */}
-        <p className="font-mono text-xs text-accent">{project.role}</p>
+        {/* Status badge + role */}
+        <div className="flex items-center justify-between">
+          <p className="font-mono text-xs text-accent">
+            TYPE: {project.role}
+          </p>
+          <span
+            className={`font-mono text-xs tracking-widest ${
+              isLive ? 'text-[#26a69a]' : 'text-muted'
+            }`}
+          >
+            {isLive ? '● LIVE' : '■ ARCHIVED'}
+          </span>
+        </div>
 
-        {/* Title */}
-        <h3 className="font-display text-xl text-text-primary leading-snug">
-          {project.title}
+        {/* Title with $ prefix */}
+        <h3 className="font-mono text-xl text-text-primary leading-snug">
+          ${project.title}
         </h3>
 
         {/* Tagline */}
-        <p className="font-sans text-sm text-text-secondary leading-relaxed">
-          {project.tagline}
-        </p>
+        <div className="flex flex-col gap-0.5">
+          <span className="font-mono text-xs text-muted tracking-widest">{'// OVERVIEW'}</span>
+          <p className="font-sans text-sm text-text-secondary leading-relaxed">
+            {project.tagline}
+          </p>
+        </div>
 
         {/* Tech stack chips */}
-        <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-muted/40">
-          {project.techStack.slice(0, 4).map((tech) => (
-            <span
-              key={tech}
-              className="px-3 py-1 border border-muted rounded-full font-mono text-xs text-text-secondary"
-            >
-              {tech}
-            </span>
-          ))}
-          {project.techStack.length > 4 && (
-            <span className="px-3 py-1 font-mono text-xs text-muted">
-              +{project.techStack.length - 4} more
-            </span>
-          )}
+        <div className="flex flex-col gap-2 mt-auto pt-4 border-t border-muted/40">
+          <span className="font-mono text-xs text-muted tracking-widest">INSTRUMENTS:</span>
+          <div className="flex flex-wrap gap-2">
+            {project.techStack.slice(0, 4).map((tech) => (
+              <span
+                key={tech}
+                className="px-3 py-1 border border-[#26a69a]/30 rounded-full font-mono text-xs text-text-secondary"
+              >
+                {tech}
+              </span>
+            ))}
+            {project.techStack.length > 4 && (
+              <span className="px-3 py-1 font-mono text-xs text-muted">
+                +{project.techStack.length - 4} more
+              </span>
+            )}
+          </div>
         </div>
 
       </div>

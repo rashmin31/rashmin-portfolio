@@ -2,12 +2,12 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 
 const STATS = [
-    { value: "7+", label: "Years Experience" },
-    { value: "10+", label: "Projects Shipped" },
-    { value: "4", label: "Engineers Led" },
+    { key: "EXP_YRS", value: "7+", label: "Years Exp." },
+    { key: "PROJ_SHIPPED", value: "10+", label: "Projects" },
+    { key: "TEAM_LED", value: "4", label: "Engineers" },
 ];
 
 export function AboutSection() {
@@ -44,7 +44,6 @@ export function AboutSection() {
             });
 
             // Right column items: staggered fade up on scroll entry
-            // .about-right-item is scoped to this section via gsap.context
             gsap.from(".about-right-item", {
                 y: 30,
                 opacity: 0,
@@ -75,8 +74,8 @@ export function AboutSection() {
                     className="md:w-2/5 flex justify-center flex-shrink-0"
                 >
                     <div ref={imageRef} className="relative">
-                        {/* Glow ring */}
-                        <div className="absolute inset-0 rounded-full border border-accent shadow-[0_0_60px_rgba(99,102,241,0.25)] z-10" />
+                        {/* Terminal frame */}
+                        <div className="absolute inset-0 rounded-full border-2 border-[#26a69a]/60 shadow-[0_0_60px_rgba(38,166,154,0.2)] z-10" />
 
                         <Image
                             src="/images/profile.png"
@@ -92,8 +91,8 @@ export function AboutSection() {
                 {/* ── Right column: bio content ── */}
                 <div className="md:w-3/5 flex flex-col gap-6">
                     {/* Section label */}
-                    <p className="about-right-item font-mono text-sm text-accent tracking-widest uppercase">
-                        About Me
+                    <p className="about-right-item font-mono text-xs text-accent tracking-widest uppercase">
+                        COMPANY PROFILE / FUNDAMENTAL ANALYSIS
                     </p>
 
                     {/* Personal headline */}
@@ -103,31 +102,40 @@ export function AboutSection() {
                     </h2>
 
                     {/* Bio paragraph 1 */}
-                    <p className="about-right-item font-sans text-text-secondary leading-relaxed">
-                        With over 7 years of experience in frontend engineering,
-                        I have worked across startups, enterprises, and global
-                        remote teams — building React applications that handle
-                        real scale and real users. I currently lead frontend
-                        development at Punon Technologies, Mumbai.
-                    </p>
+                    <div className="about-right-item flex flex-col gap-1">
+                        <span className="font-mono text-xs text-muted tracking-widest">{'// OVERVIEW'}</span>
+                        <p className="font-sans text-text-secondary leading-relaxed">
+                            With over 7 years of experience in frontend engineering,
+                            I have worked across startups, enterprises, and global
+                            remote teams — building React applications that handle
+                            real scale and real users. I currently lead frontend
+                            development at Punon Technologies, Mumbai.
+                        </p>
+                    </div>
 
                     {/* Bio paragraph 2 */}
-                    <p className="about-right-item font-sans text-text-secondary leading-relaxed">
-                        I care about the quality of what I ship. Clean
-                        architecture, readable code, and interfaces that feel
-                        effortless to use — these are not extras for me, they
-                        are the baseline. Outside of client work I explore
-                        algorithmic trading systems and 3D web experiences.
-                    </p>
+                    <div className="about-right-item flex flex-col gap-1">
+                        <span className="font-mono text-xs text-muted tracking-widest">{'// INVESTMENT_THESIS'}</span>
+                        <p className="font-sans text-text-secondary leading-relaxed">
+                            I care about the quality of what I ship. Clean
+                            architecture, readable code, and interfaces that feel
+                            effortless to use — these are not extras for me, they
+                            are the baseline. Outside of client work I explore
+                            algorithmic trading systems and 3D web experiences.
+                        </p>
+                    </div>
 
-                    {/* Key stats */}
-                    <div className="about-right-item flex gap-10 pt-4 border-t border-muted/40">
+                    {/* Key stats — terminal readouts */}
+                    <div className="about-right-item flex gap-8 pt-4 border-t border-muted/40">
                         {STATS.map((stat) => (
-                            <div key={stat.label}>
-                                <div className="font-mono text-3xl font-bold text-text-primary">
-                                    {stat.value}
+                            <div key={stat.key} className="flex flex-col gap-1">
+                                <div className="font-mono text-xs text-muted tracking-widest">
+                                    {stat.key}
                                 </div>
-                                <div className="font-sans text-sm text-text-secondary mt-1">
+                                <div className="font-mono text-2xl font-bold text-[#26a69a]">
+                                    ▲ {stat.value}
+                                </div>
+                                <div className="font-mono text-xs text-text-secondary">
                                     {stat.label}
                                 </div>
                             </div>

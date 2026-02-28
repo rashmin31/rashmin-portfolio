@@ -38,11 +38,11 @@ export function TestimonialsSection() {
 
         {/* ── Header ── */}
         <div className="mb-16">
-          <p className="font-mono text-sm text-accent tracking-widest uppercase mb-4">
-            Testimonials
+          <p className="font-mono text-xs text-accent tracking-widest uppercase mb-4">
+            ANALYST COVERAGE / RATINGS
           </p>
           <h2 className="font-display text-4xl text-text-primary">
-            What people say.
+            Market Sentiment
           </h2>
         </div>
 
@@ -62,31 +62,32 @@ export function TestimonialsSection() {
 
 function TestimonialCard({ testimonial }: { testimonial: TTestimonial }) {
   return (
-    <div className="testimonial-card bg-surface border border-muted rounded-2xl p-8 flex flex-col gap-6">
+    <div className="testimonial-card bg-surface/80 backdrop-blur-sm border border-muted border-l-2 border-l-[#26a69a] rounded-2xl p-8 flex flex-col gap-5">
 
-      {/* Large decorative opening quote */}
-      <div
-        className="font-display text-6xl text-accent leading-none select-none"
-        style={{ opacity: 0.3 }}
-        aria-hidden="true"
-      >
-        &ldquo;
+      {/* Rating header */}
+      <div className="flex items-center gap-3">
+        <span className="font-mono text-xs text-muted tracking-widest">RATING:</span>
+        <span className="font-mono text-xs text-[#26a69a] tracking-wider">■■■■■</span>
+        <span className="font-mono text-xs text-[#26a69a] tracking-widest">STRONG BUY</span>
       </div>
 
+      {/* Analyst note label */}
+      <span className="font-mono text-xs text-muted tracking-widest">{'// ANALYST NOTE:'}</span>
+
       {/* Quote text */}
-      <blockquote className="font-sans text-lg text-text-secondary italic leading-relaxed flex-1">
+      <blockquote className="font-sans text-base text-text-secondary italic leading-relaxed flex-1">
         {testimonial.text}
       </blockquote>
 
       {/* Attribution */}
       <div className="flex items-center gap-4 pt-4 border-t border-muted/40">
         <Avatar name={testimonial.name} avatarUrl={testimonial.avatarUrl} />
-        <div>
-          <p className="font-display text-text-primary leading-tight">
-            {testimonial.name}
+        <div className="flex flex-col gap-0.5">
+          <p className="font-mono text-xs text-muted tracking-widest">
+            ANALYST: <span className="text-text-primary">{testimonial.name}</span>
           </p>
-          <p className="font-mono text-sm text-text-secondary mt-0.5">
-            {testimonial.role} · {testimonial.company}
+          <p className="font-mono text-xs text-muted tracking-widest">
+            FIRM: <span className="text-text-secondary">{testimonial.company}</span>
           </p>
         </div>
       </div>
@@ -113,14 +114,14 @@ function Avatar({ name, avatarUrl }: { name: string; avatarUrl?: string }) {
         alt={name}
         width={40}
         height={40}
-        className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+        className="w-10 h-10 rounded-md object-cover flex-shrink-0 border border-[#26a69a]/40"
       />
     )
   }
 
   return (
-    <div className="w-10 h-10 rounded-full bg-accent/20 border border-accent/40 flex items-center justify-center flex-shrink-0">
-      <span className="font-mono text-xs text-accent font-bold">{initials}</span>
+    <div className="w-10 h-10 rounded-md bg-[#26a69a]/10 border border-[#26a69a]/40 flex items-center justify-center flex-shrink-0">
+      <span className="font-mono text-xs text-[#26a69a] font-bold">{initials}</span>
     </div>
   )
 }

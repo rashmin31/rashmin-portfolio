@@ -1,9 +1,16 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { CalendarDays } from 'lucide-react'
 import { gsap } from '@/lib/gsap'
 import { SchedulerModal } from '@/components/ui/SchedulerModal'
+
+const ORDER_ROWS = [
+  { label: 'ORDER_TYPE:', value: 'Discovery Call / Collaboration' },
+  { label: 'INSTRUMENT:', value: 'Rashmin Bhanderi' },
+  { label: 'QUANTITY:', value: '1 Session (30 min)' },
+  { label: 'EXECUTION:', value: 'Google Meet' },
+  { label: 'MARKET:', value: 'Mumbai · Remote · Worldwide' },
+]
 
 export function ContactSection() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -66,20 +73,20 @@ export function ContactSection() {
 
           {/* ── Left: invite copy ── */}
           <div ref={leftRef} className="md:w-2/5 flex flex-col gap-6 opacity-0">
-            <p className="font-mono text-sm text-accent tracking-widest uppercase">
-              Let&apos;s Work Together
+            <p className="font-mono text-xs text-accent tracking-widest uppercase">
+              ORDER TICKET / INITIATE TRADE
             </p>
             <h2 className="font-display text-4xl text-text-primary leading-snug">
-              Have a project in mind?
+              Open a Position
             </h2>
             <p className="font-sans text-text-secondary leading-relaxed">
-              I&apos;m open to discussing new opportunities, technical
-              consultations, and interesting projects. Let&apos;s find a time
-              to talk.
+              Available for full-time roles, technical consulting, and project
+              collaborations. Experienced in React ecosystems, algorithmic
+              trading, and 3D web. Let&apos;s find the right entry point.
             </p>
             <div className="flex flex-col gap-1">
-              <p className="font-mono text-xs text-muted tracking-wide">
-                or reach out directly
+              <p className="font-mono text-xs text-muted tracking-widest">
+                DIRECT LINE:
               </p>
               <a
                 href="mailto:rashminbhanderi@gmail.com"
@@ -90,39 +97,52 @@ export function ContactSection() {
             </div>
           </div>
 
-          {/* ── Right: CTA card ── */}
+          {/* ── Right: order ticket card ── */}
           <div className="md:w-3/5 w-full flex justify-center opacity-0" ref={cardRef}>
-            <div className="w-full max-w-md bg-surface border border-muted rounded-2xl p-10 flex flex-col items-center gap-6 text-center">
+            <div className="w-full max-w-md bg-surface/80 backdrop-blur-sm border border-muted border-l-2 border-l-[#26a69a] rounded-2xl p-8 flex flex-col gap-0">
 
-              {/* Calendar icon */}
-              <div className="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center">
-                <CalendarDays className="w-8 h-8 text-accent" />
+              {/* Card header */}
+              <div className="flex items-center justify-between mb-5">
+                <span className="font-mono text-xs text-muted tracking-widest">ORDER TICKET</span>
+                <span className="font-mono text-xs text-[#26a69a] tracking-widest">■■■■ LIMIT</span>
               </div>
 
-              {/* Heading */}
-              <div className="flex flex-col gap-2">
-                <h3 className="font-display text-2xl text-text-primary">
-                  Book a 30-min call
-                </h3>
-                <p className="font-sans text-text-secondary text-sm leading-relaxed">
-                  Pick a time that works for you.
-                  <br />
-                  We&apos;ll meet on Google Meet.
-                </p>
+              {/* Order rows */}
+              <div className="flex flex-col divide-y divide-muted/30">
+                {ORDER_ROWS.map(({ label, value }) => (
+                  <div key={label} className="flex items-baseline justify-between gap-4 py-3">
+                    <span className="font-mono text-xs text-muted tracking-widest flex-shrink-0">
+                      {label}
+                    </span>
+                    <span className="font-mono text-xs text-text-secondary text-right">
+                      {value}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Divider */}
+              <div className="border-t border-muted/40 my-5" />
+
+              {/* Availability */}
+              <div className="flex items-center gap-2 mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#26a69a] animate-pulse" />
+                <span className="font-mono text-xs text-[#26a69a] tracking-widest">
+                  AVAILABILITY: OPEN FOR OPPORTUNITIES
+                </span>
               </div>
 
               {/* CTA button */}
               <button
                 onClick={() => setModalOpen(true)}
                 data-cursor-hover
-                className="px-8 py-4 rounded-xl bg-accent text-white font-mono text-sm hover:bg-accent/80 hover:scale-105 transition-all duration-200"
+                className="w-full py-4 border border-[#26a69a] text-[#26a69a] font-mono text-sm rounded hover:bg-[#26a69a]/10 hover:scale-[1.02] transition-all duration-200 tracking-widest"
               >
-                Schedule a Meeting
+                PLACE ORDER →
               </button>
 
-              {/* Fine print */}
-              <p className="font-mono text-xs text-muted tracking-wide">
-                Free · 30 minutes · Google Meet
+              <p className="font-mono text-xs text-muted tracking-wide text-center mt-3">
+                schedule via Cal.com · Free · 30 min
               </p>
 
             </div>

@@ -14,7 +14,7 @@ export function CameraRig() {
   // Smoothed mouse offset that lags behind mouse
   const target = useRef({ x: 0, y: 0 })
   // Smoothed scroll-driven horizontal pan
-  const scrollPan = useRef({ x: CHART_ORIGIN_X + 2 })
+  const scrollPan = useRef({ x: CHART_ORIGIN_X })
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -43,7 +43,7 @@ export function CameraRig() {
     // World X of that candle
     const formingX = CHART_ORIGIN_X + formingIdx * CHART_CANDLE_STEP
     // Keep forming candle slightly right of center in view
-    const desiredPanX = formingX - 1.5
+    const desiredPanX = formingX
 
     // Lerp smoothly to the desired pan position
     scrollPan.current.x += (desiredPanX - scrollPan.current.x) * 0.04
